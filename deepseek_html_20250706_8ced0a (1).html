@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Sana Tengah - Kabupaten Pamekasan Madura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .search-container {
+            margin: 2rem auto;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .map-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .map-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .destinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .destination-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .card-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-location i {
+            color: var(--accent);
+        }
+        
+        .card-description {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* New Dusun Grid Styles */
+        .dusun-section {
+            margin: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .dusun-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .dusun-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dusun-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dusun-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .dusun-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .dusun-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .qr-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 300px;
+        }
+        
+        .qr-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .qr-code i {
+            font-size: 5rem;
+            color: var(--dark);
+        }
+        
+        .qr-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+            
+            .destinations, .dusun-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-overlay {
+                top: auto;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .map-controls {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h1>Desa Sana Tengah</h1>
+                <p class="subtitle">Kabupaten Pamekasan, Madura</p>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Cari lokasi atau destinasi di Desa Sana Tengah..." id="pac-input">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="map-overlay">
+                <div class="map-controls">
+                    <button class="map-btn" id="zoom-in"><i class="fas fa-plus"></i></button>
+                    <button class="map-btn" id="zoom-out"><i class="fas fa-minus"></i></button>
+                    <button class="map-btn" id="locate-me"><i class="fas fa-location-arrow"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dusun-section">
+            <h2 class="section-title">Dusun di Desa Sana Tengah</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: var(--text-light);">
+                Desa Sana Tengah terdiri dari 10 dusun yang tersebar di wilayah seluas 5.2 km². Setiap dusun memiliki karakteristik dan potensi unik yang menjadi bagian dari kekayaan budaya dan alam desa kami.
+            </p>
+            
+            <div class="dusun-grid">
+                <div class="dusun-card">
+                    <div class="dusun-number">1</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Korong Dajah</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Pusat kegiatan ekonomi desa</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">2</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Sumber Penang</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Kawasan penghasil buah-buahan</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">3</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Bungguplong</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Sentra pertanian padi</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">4</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Taretah</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Pusat industri rumah tangga</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">5</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Ibaih</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Dekat dengan sumber mata air</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">6</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Jungjang</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Pusat kegiatan keagamaan</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">7</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Cekonce Timur</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Wilayah timur yang cerah</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">8</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Cekonce Barat</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Wilayah barat yang sejuk</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">9</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-hills"></i>
+                    </div>
+                    <h3 class="dusun-name">Langdulang</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Wilayah perbukitan</p>
+                </div>
+                
+                <div class="dusun-card">
+                    <div class="dusun-number">10</div>
+                    <div class="dusun-icon">
+                        <i class="fas fa-people-group"></i>
+                    </div>
+                    <h3 class="dusun-name">Dusun Korong Laok</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Pemukiman padat penduduk</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);">Destinasi Utama di Desa Sana Tengah</h2>
+        
+        <div class="destinations">
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1588666309990-d68f08e3d4a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Dusun Krajan" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Dusun Krajan</h3>
+                    <div class="card-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Pusat Desa Sana Tengah</span>
+                    </div>
+                    <p class="card-description">
+                        Pusat pemerintahan desa dengan balai desa yang megah dan fasilitas umum lengkap. Terdapat juga pasar tradisional yang ramai setiap pagi.
+                    </p>
+                    <div class="card-footer">
+                        <button class="map-btn" onclick="focusOnLocation(-7.1655, 113.4825)">Lihat Peta</button>
+                        <span style="font-size: 0.8rem; color: var(--text-light);">2 km dari pusat</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Dusun Barat" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Dusun Barat</h3>
+                    <div class="card-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bagian Barat Desa</span>
+                    </div>
+                    <p class="card-description">
+                        Kawasan pertanian subur dengan sawah menghampar. Terdapat juga sentra kerajinan tangan tradisional Madura yang terkenal.
+                    </p>
+                    <div class="card-footer">
+                        <button class="map-btn" onclick="focusOnLocation(-7.1660, 113.4800)">Lihat Peta</button>
+                        <span style="font-size: 0.8rem; color: var(--text-light);">1.5 km dari pusat</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Dusun Timur" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Dusun Timur</h3>
+                    <div class="card-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bagian Timur Desa</span>
+                    </div>
+                    <p class="card-description">
+                        Kawasan pemukiman dengan pantai kecil yang indah. Tempat ideal untuk melihat matahari terbit dan aktivitas nelayan tradisional.
+                    </p>
+                    <div class="card-footer">
+                        <button class="map-btn" onclick="focusOnLocation(-7.1650, 113.4850)">Lihat Peta</button>
+                        <span style="font-size: 0.8rem; color: var(--text-light);">2.5 km dari pusat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="qr-card">
+            <h3 class="qr-title">Scan untuk Peta Desa</h3>
+            <div class="qr-code">
+                <i class="fas fa-qrcode"></i>
+            </div>
+            <p class="qr-desc">Scan kode QR di atas untuk melihat peta Desa Sana Tengah di perangkat mobile Anda</p>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Desa Sana Tengah</h3>
+                <p>Kabupaten Pamekasan, Madura, Jawa Timur</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                
+                <p class="copyright">&copy; 2023 Desa Sana Tengah. Semua hak dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer></script>
+    
+    <script>
+        let map;
+        let markers = [];
+        let infoWindow;
+        
+        function initMap() {
+            // Koordinat Desa Sana Tengah, Pamekasan
+            const desaSanaTengah = { lat: -7.1655, lng: 113.4825 };
+            
+            // Initialize map centered on Desa Sana Tengah
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: desaSanaTengah,
+                zoom: 15,
+                mapTypeId: "roadmap",
+                styles: [
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#444444"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#f2f2f2"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 45
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#3498db"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    }
+                ]
+            });
+            
+            infoWindow = new google.maps.InfoWindow();
+            
+            // Add markers for important locations
+            const locations = [
+                {
+                    name: "Balai Desa Sana Tengah",
+                    position: { lat: -7.1655, lng: 113.4825 },
+                    type: "government",
+                    icon: "https://maps.google.com/mapfiles/kml/pal2/icon2.png",
+                    description: "Pusat pemerintahan Desa Sana Tengah"
+                },
+                {
+                    name: "Pasar Krajan",
+                    position: { lat: -7.1658, lng: 113.4828 },
+                    type: "market",
+                    icon: "https://maps.google.com/mapfiles/kml/pal3/icon35.png",
+                    description: "Pasar tradisional buka setiap pagi"
+                },
+                {
+                    name: "SDN Sana Tengah 1",
+                    position: { lat: -7.1652, lng: 113.4820 },
+                    type: "school",
+                    icon: "https://maps.google.com/mapfiles/kml/pal3/icon21.png",
+                    description: "Sekolah Dasar Negeri Sana Tengah 1"
+                },
+                {
+                    name: "Masjid Al-Hidayah",
+                    position: { lat: -7.1650, lng: 113.4830 },
+                    type: "mosque",
+                    icon: "https://maps.google.com/mapfiles/kml/pal3/icon54.png",
+                    description: "Masjid utama Desa Sana Tengah"
+                },
+                {
+                    name: "Pantai Dusun Timur",
+                    position: { lat: -7.1645, lng: 113.4855 },
+                    type: "beach",
+                    icon: "https://maps.google.com/mapfiles/kml/pal2/icon6.png",
+                    description: "Pantai kecil dengan pemandangan indah"
+                },
+                {
+                    name: "Sentra Kerajinan",
+                    position: { lat: -7.1665, lng: 113.4805 },
+                    type: "craft",
+                    icon: "https://maps.google.com/mapfiles/kml/pal3/icon49.png",
+                    description: "Pusat kerajinan tangan tradisional"
+                }
+            ];
+            
+            // Add markers to the map
+            locations.forEach(location => {
+                const marker = new google.maps.Marker({
+                    position: location.position,
+                    map: map,
+                    title: location.name,
+                    icon: location.icon
+                });
+                
+                markers.push(marker);
+                
+                marker.addListener("click", () => {
+                    infoWindow.setContent(`
+                        <div style="padding: 10px;">
+                            <h3 style="margin: 0 0 5px 0; color: var(--primary);">${location.name}</h3>
+                            <p style="margin: 0;">${location.description}</p>
+                            <small style="color: #666;">Koordinat: ${location.position.lat.toFixed(4)}, ${location.position.lng.toFixed(4)}</small>
+                        </div>
+                    `);
+                    infoWindow.open(map, marker);
+                });
+            });
+            
+            // Add search box functionality
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+            
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+            
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+                
+                if (places.length === 0) {
+                    return;
+                }
+                
+                // Clear out the old markers
+                markers.forEach(marker => {
+                    marker.setMap(null);
+                });
+                markers = [];
+                
+                // For each place, get the icon, name and location
+                const bounds = new google.maps.LatLngBounds();
+                
+                places.forEach(place => {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    
+                    // Create a marker for each place
+                    markers.push(
+                        new google.maps.Marker({
+                            map: map,
+                            title: place.name,
+                            position: place.geometry.location,
+                        })
+                    );
+                    
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            
+            // Add area polygon
+            const villageArea = new google.maps.Polygon({
+                paths: [
+                    { lat: -7.1640, lng: 113.4800 },
+                    { lat: -7.1645, lng: 113.4860 },
+                    { lat: -7.1670, lng: 113.4860 },
+                    { lat: -7.1675, lng: 113.4800 }
+                ],
+                strokeColor: "#3498db",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#3498db",
+                fillOpacity: 0.1,
+            });
+            
+            villageArea.setMap(map);
+            
+            // Map controls
+            document.getElementById('zoom-in').addEventListener('click', () => {
+                map.setZoom(map.getZoom() + 1);
+            });
+            
+            document.getElementById('zoom-out').addEventListener('click', () => {
+                map.setZoom(map.getZoom() - 1);
+            });
+            
+            document.getElementById('locate-me').addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        map.setCenter(pos);
+                        map.setZoom(16);
+                        
+                        const marker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 8,
+                                fillColor: "#4285F4",
+                                fillOpacity: 1,
+                                strokeWeight: 2,
+                                strokeColor: "#FFFFFF"
+                            }
+                        });
+                        
+                        markers.push(marker);
+                        
+                        infoWindow.setContent("Lokasi Anda saat ini");
+                        infoWindow.open(map, marker);
+                    }, error => {
+                        alert('Tidak dapat mendapatkan lokasi Anda: ' + error.message);
+                    });
+                } else {
+                    alert('Geolocation tidak didukung oleh browser Anda');
+                }
+            });
+        }
+        
+        // Function to focus on location from cards
+        window.focusOnLocation = (lat, lng) => {
+            if (map) {
+                map.setCenter({ lat, lng });
+                map.setZoom(16);
+            }
+        };
+    </script>
+</body>
+</html>
